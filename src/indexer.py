@@ -1,5 +1,6 @@
 import mimetypes
 import os
+import tempfile
 from pathlib import Path
 from typing import Sequence
 
@@ -8,7 +9,6 @@ from peewee import IntegrityError
 from src.archives import ZipArchiveExtractor
 from src.db_models import Metadata as MetadataModel
 from src.metadata import Fb2MetadataExtractor
-from src.tempdir import tempdir
 
 mimetypes.add_type("application/fb2+xml", ".fb2")
 
@@ -23,9 +23,13 @@ def index_files(filenames: Sequence[tuple[str, str]]) -> None:
         filetype = mimetypes.guess_type(filename)[0]
         match filetype:
             case "application/fb2+xml":
-                meta = Fb2MetadataExtractor.extract_metadata(str(filename))
+                try:
+                    meta = Fb2MetadataExtractor.extract_metadata(str(filename))
+                except Exception as exc:
+                    print(f"Unable to extract metadata from {virtual_filename}, skipping")
+                    continue
             case "application/zip":
-                with tempdir() as dir:
+                with tempfile.TemporaryDirectory() as dir:
                     print(f"Processing archive {filename}...")
                     ZipArchiveExtractor.extract_archive(filename, dir)
                     contents = [(Path(dir) / name, Path(virtual_filename) / name) for name in os.listdir(dir)]

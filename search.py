@@ -11,6 +11,12 @@ from prettytable import PrettyTable
 from src import db_init, searcher
 
 
+def print_usage() -> None:
+    print(
+        f"No filters specified. Usage: {argv[0]} [-t <title>] [-a <author>] [--translator <translator>] [-s <series>] [-f <format>] [-l <lang>] [query]"
+    )
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("-t", "--title")
@@ -42,9 +48,7 @@ def main():
             max_results=max_results,
         )
     except searcher.NoFiltersException:
-        print(
-            f"No filters specified. Usage: {argv[0]} [-t <title>] [-a <author>] [--translator <translator>] [-s <series>] [-f <format>] [-l <lang>] [query]"
-        )
+        print_usage()
         database.close()
         raise SystemExit
 
