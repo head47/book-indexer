@@ -11,7 +11,11 @@ class ModelWithDb(Model):
 class Metadata(ModelWithDb):
     title = CharField(index=True)
     author_list = CharField(index=True)
-    series = CharField(null=True, index=True)
+    translator_list = CharField(index=True)
+    series = CharField(index=True)
     lang = CharField()
     format = CharField()
     virtual_filename = CharField(unique=True)
+
+    class Meta:
+        indexes = ((("title", "author_list", "translator_list", "series", "lang", "format"), True),)

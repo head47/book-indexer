@@ -9,7 +9,8 @@ import ebookmeta
 class Metadata:
     title: str
     author_list: str
-    series: Optional[str]
+    translator_list: str
+    series: str
     lang: str
     format: str
 
@@ -26,7 +27,8 @@ class Fb2MetadataExtractor(MetadataExtractor):
         meta = Metadata(
             title=ebook_meta.title,
             author_list=", ".join(ebook_meta.author_list),
-            series=ebook_meta.series if ebook_meta.series != "" else None,
+            translator_list=", ".join(ebook_meta.translator_list),
+            series=ebook_meta.series,
             lang=ebook_meta.lang,
             format=ebook_meta.format,
         )

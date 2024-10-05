@@ -10,7 +10,7 @@ from src.db_models import database
 
 
 def print_usage() -> None:
-    print(f"Usage: {argv[1]} <file | directory>")
+    print(f"Usage: {argv[0]} <file | directory>")
 
 
 def main():
@@ -38,3 +38,7 @@ def main():
 
     print("Finished processing.")
     database.close()
+
+
+if __name__ == "__main__":
+    main()
