@@ -1,8 +1,6 @@
 import mimetypes
 import os
-from dataclasses import dataclass
 from pathlib import Path
-from shutil import rmtree
 from typing import Sequence
 
 from peewee import IntegrityError
@@ -32,6 +30,7 @@ def index_files(filenames: Sequence[tuple[str, str]]) -> None:
                     ZipArchiveExtractor.extract_archive(filename, dir)
                     contents = [(Path(dir) / name, Path(virtual_filename) / name) for name in os.listdir(dir)]
                     index_files(contents)
+                continue
             case _:
                 print(f"Unknown filetype for file {virtual_filename}, skipping")
                 continue
@@ -44,7 +43,7 @@ def index_files(filenames: Sequence[tuple[str, str]]) -> None:
                 series=meta.series,
                 lang=meta.lang,
                 format=meta.format,
-                virtual_filename=virtual_filename,
+                virtual_filename=os.path.abspath(virtual_filename),
             )
             print(f"Indexed book {virtual_filename} ({meta.author_list} - {meta.title})")
         except IntegrityError:

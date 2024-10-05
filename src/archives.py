@@ -1,4 +1,3 @@
-import tempfile
 from abc import ABC, abstractmethod
 from zipfile import ZipFile
 

@@ -1,4 +1,3 @@
-import argparse
 from typing import Optional
 
 from peewee import ModelSelect
