@@ -1,3 +1,4 @@
 ebookmeta==1.2.11
 peewee==3.17.6
 psycopg2-2.9.9
+prettytable==3.11.0
