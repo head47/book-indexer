@@ -1,6 +1,5 @@
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
-from typing import Optional
 
 import ebookmeta
 
@@ -16,12 +15,13 @@ class Metadata:
 
 
 class MetadataExtractor(ABC):
-    @classmethod
+    @staticmethod
     @abstractmethod
     def extract_metadata(filename: str) -> Metadata: ...
 
 
 class Fb2MetadataExtractor(MetadataExtractor):
+    @staticmethod
     def extract_metadata(filename: str) -> Metadata:
         ebook_meta = ebookmeta.get_metadata(filename)
         meta = Metadata(
