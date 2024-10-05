@@ -12,4 +12,4 @@ Currently supported archive formats:
 
 1. Copy `config.example.json` to `config.json`, configure PostgreSQL there
 2. Run `indexer.py` on your collection: `indexer.py <file | directory>`
-3. Run `search.py`... TODO
+3. Run `search.py` with your query: `search.py [-t <title>] [-a <author>] [--translator <translator>] [-s <series>] [-f <format>] [-l <lang>] [query]`
