@@ -1,18 +1,21 @@
 import mimetypes
 import os
 import tempfile
+from contextvars import ContextVar
 from pathlib import Path
 
 from src.archives import ZipArchiveExtractor
-from src.db_models import Metadata as MetadataModel
 
 mimetypes.add_type("application/fb2+xml", ".fb2")
+
+output_dir_cv = ContextVar("output_dir")
 
 
 class UnsupportedArchiveFormat(Exception): ...
 
 
-def extract(virtual_filename: str, prefix: str) -> str:
+def extract(virtual_filename: str, prefix: str, output_dir: str) -> str:
+    output_dir_cv.set(output_dir)
     cur_real_path = Path()
     path_parts = Path(virtual_filename).parts
 
@@ -28,7 +31,7 @@ def _extract_iteration(path_parts: tuple[str], cur_real_path: str, i: int, prefi
                 suffix = ".fb2"
             case _:
                 suffix = None
-        output = tempfile.mkstemp(prefix=prefix, suffix=suffix, dir=".")[1]
+        output = tempfile.mkstemp(prefix=prefix, suffix=suffix, dir=output_dir_cv.get())[1]
         return output
 
     poss_real_path = cur_real_path / path_parts[i]
