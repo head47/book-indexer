@@ -25,23 +25,23 @@ def search(
 ) -> ModelSelect:
     operators = PlaceholderOperator()
     if title is not None:
-        operators &= MetadataModel.title ** f"%{title}%"
+        operators &= MetadataModel.title_search.match(title, plain=True)
     if author is not None:
-        operators &= MetadataModel.author_list ** f"%{author}%"
+        operators &= MetadataModel.author_list_search.match(author, plain=True)
     if translator is not None:
-        operators &= MetadataModel.translator_list ** f"%{translator}%"
+        operators &= MetadataModel.translator_list_search.match(translator, plain=True)
     if series is not None:
-        operators &= MetadataModel.series ** f"%{series}%"
+        operators &= MetadataModel.series_search.match(series, plain=True)
     if format is not None:
         operators &= MetadataModel.format == format
     if lang is not None:
         operators &= MetadataModel.lang == lang
     if query is not None:
         operators &= (
-            (MetadataModel.title ** f"%{query}%")
-            | (MetadataModel.author_list ** f"%{query}%")
-            | (MetadataModel.translator_list ** f"%{query}%")
-            | (MetadataModel.series ** f"%{query}%")
+            (MetadataModel.title_search.match(query, plain=True))
+            | (MetadataModel.author_list_search.match(query, plain=True))
+            | (MetadataModel.translator_list_search.match(query, plain=True))
+            | (MetadataModel.series_search.match(query, plain=True))
         )
     if isinstance(operators, PlaceholderOperator):
         raise NoFiltersException

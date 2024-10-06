@@ -6,6 +6,7 @@ from pathlib import Path
 from typing import Sequence
 
 from peewee import IntegrityError
+from playhouse.postgres_ext import fn
 
 from src.archives import ZipArchiveExtractor
 from src.db_models import Metadata as MetadataModel
@@ -47,9 +48,13 @@ def index_files(filenames: Sequence[tuple[str, str]]) -> None:
         try:
             MetadataModel.create(
                 title=meta.title,
+                title_search=fn.to_tsvector(meta.title),
                 author_list=meta.author_list,
+                author_list_search=fn.to_tsvector(meta.author_list),
                 translator_list=meta.translator_list,
+                translator_list_search=fn.to_tsvector(meta.translator_list),
                 series=meta.series,
+                series_search=fn.to_tsvector(meta.series),
                 lang=meta.lang,
                 format=meta.format,
                 hash=hash.hexdigest(),

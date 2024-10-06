@@ -1,6 +1,7 @@
-from peewee import CharField, Model, PostgresqlDatabase, TextField
+from peewee import CharField, Model, TextField
+from playhouse.postgres_ext import PostgresqlExtDatabase, TSVectorField
 
-database = PostgresqlDatabase(None)
+database = PostgresqlExtDatabase(None)
 
 
 class ModelWithDb(Model):
@@ -9,10 +10,18 @@ class ModelWithDb(Model):
 
 
 class Metadata(ModelWithDb):
-    title = TextField(index=True)
-    author_list = TextField(index=True)
-    translator_list = TextField(index=True)
-    series = TextField(index=True)
+    title = TextField()
+    title_search = TSVectorField()
+
+    author_list = TextField()
+    author_list_search = TSVectorField()
+
+    translator_list = TextField()
+    translator_list_search = TSVectorField()
+
+    series = TextField()
+    series_search = TSVectorField()
+
     lang = CharField()
     format = CharField()
     hash = CharField(64, unique=True)
