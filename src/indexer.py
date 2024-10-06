@@ -1,3 +1,4 @@
+import hashlib
 import mimetypes
 import os
 import tempfile
@@ -39,6 +40,10 @@ def index_files(filenames: Sequence[tuple[str, str]]) -> None:
                 print(f"Unknown filetype for file {virtual_filename}, skipping")
                 continue
 
+        hash = hashlib.sha256()
+        hash.update(
+            f"{meta.title}:{meta.author_list}:{meta.translator_list}:{meta.series}:{meta.lang}:{meta.format}".encode()
+        )
         try:
             MetadataModel.create(
                 title=meta.title,
@@ -47,6 +52,7 @@ def index_files(filenames: Sequence[tuple[str, str]]) -> None:
                 series=meta.series,
                 lang=meta.lang,
                 format=meta.format,
+                hash=hash.hexdigest(),
                 virtual_filename=os.path.abspath(virtual_filename),
             )
             print(f"Indexed book {virtual_filename} ({meta.author_list} - {meta.title})")

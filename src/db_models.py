@@ -15,7 +15,5 @@ class Metadata(ModelWithDb):
     series = TextField(index=True)
     lang = CharField()
     format = CharField()
+    hash = CharField(64, unique=True)
     virtual_filename = TextField(unique=True)
-
-    class Meta:
-        indexes = ((("title", "author_list", "translator_list", "series", "lang", "format"), True),)
