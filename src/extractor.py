@@ -1,5 +1,6 @@
 import mimetypes
 import os
+import shutil
 import tempfile
 from contextvars import ContextVar
 from pathlib import Path
@@ -24,7 +25,6 @@ def extract(virtual_filename: str, prefix: str, output_dir: str) -> str:
 
 def _extract_iteration(path_parts: tuple[str], cur_real_path: str, i: int, prefix: str) -> str:
     if i == len(path_parts) - 1:
-        cur_real_path /= path_parts[-1]
         filetype = mimetypes.guess_type(cur_real_path)[0]
         match filetype:
             case "application/fb2+xml":
@@ -32,6 +32,7 @@ def _extract_iteration(path_parts: tuple[str], cur_real_path: str, i: int, prefi
             case _:
                 suffix = None
         output = tempfile.mkstemp(prefix=prefix, suffix=suffix, dir=output_dir_cv.get())[1]
+        shutil.copyfile(cur_real_path, output)
         return output
 
     poss_real_path = cur_real_path / path_parts[i]
