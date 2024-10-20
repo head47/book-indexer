@@ -3,6 +3,7 @@
         "db": "book_indexer",
         "user": "book_indexer",
         "password": "YOUR_PASSWORD",
-        "host": "localhost"
+        "host": "localhost",
+        "port": 5432
     }
 }

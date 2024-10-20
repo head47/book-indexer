@@ -10,6 +10,7 @@ def from_config(config: dict) -> Database:
         user=config["database"]["user"],
         password=config["database"]["password"],
         host=config["database"]["host"],
+        port=config["database"].get("port", 5432),
     )
     database.connect()
     database.create_tables((MetadataModel,))
