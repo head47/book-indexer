@@ -10,10 +10,6 @@ from src import db_init, extractor
 from src.db_models import Metadata as MetadataModel
 
 
-def print_usage() -> None:
-    print(f"Usage: {argv[0]} <output directory> <book IDs...>")
-
-
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("-o", "--output", default=tempfile.gettempdir())
