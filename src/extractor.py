@@ -25,6 +25,7 @@ def extract(virtual_filename: str, prefix: str, output_dir: str) -> str:
 
 def _extract_iteration(path_parts: tuple[str], cur_real_path: str, i: int, prefix: str) -> str:
     if i == len(path_parts) - 1:
+        cur_real_path /= path_parts[-1]
         filetype = mimetypes.guess_type(cur_real_path)[0]
         match filetype:
             case "application/fb2+xml":
@@ -44,7 +45,8 @@ def _extract_iteration(path_parts: tuple[str], cur_real_path: str, i: int, prefi
     match filetype:
         case "application/zip":
             with tempfile.TemporaryDirectory() as dir:
-                cur_real_path = Path(ZipArchiveExtractor.extract_archive_member(poss_real_path, path_parts[i + 1], dir))
+                cur_real_path = Path(dir)
+                Path(ZipArchiveExtractor.extract_archive_member(poss_real_path, path_parts[i + 1], dir))
                 return _extract_iteration(path_parts, cur_real_path, i + 1, prefix)
         case _:
             raise UnsupportedArchiveFormat(f"cannot extract {poss_real_path}")
