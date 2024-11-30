@@ -5,7 +5,7 @@ import tempfile
 from contextvars import ContextVar
 from pathlib import Path
 
-from src.archives import ZipArchiveExtractor
+from .archives import ZipArchiveExtractor
 
 mimetypes.add_type("application/fb2+xml", ".fb2")
 

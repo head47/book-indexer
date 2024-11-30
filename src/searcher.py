@@ -2,7 +2,7 @@ from typing import Optional
 
 from peewee import ModelSelect
 
-from src.db_models import Metadata as MetadataModel
+from .db_models import Metadata as MetadataModel
 
 
 class PlaceholderOperator:

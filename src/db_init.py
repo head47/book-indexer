@@ -1,7 +1,7 @@
 from peewee import Database
 
-from src.db_models import Metadata as MetadataModel
-from src.db_models import database
+from .db_models import Metadata as MetadataModel
+from .db_models import database
 
 
 def from_config(config: dict) -> Database:

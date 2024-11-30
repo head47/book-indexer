@@ -8,9 +8,9 @@ from typing import Sequence
 from peewee import IntegrityError
 from playhouse.postgres_ext import fn
 
-from src.archives import ZipArchiveExtractor
-from src.db_models import Metadata as MetadataModel
-from src.metadata import Fb2MetadataExtractor
+from .archives import ZipArchiveExtractor
+from .db_models import Metadata as MetadataModel
+from .metadata import Fb2MetadataExtractor
 
 mimetypes.add_type("application/fb2+xml", ".fb2")
 
