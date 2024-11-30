@@ -4,7 +4,6 @@ import json
 import os
 import tempfile
 from pathlib import Path
-from sys import argv
 
 from src import db_init, extractor
 from src.db_models import Metadata as MetadataModel
