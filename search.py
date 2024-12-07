@@ -9,6 +9,7 @@ from sys import argv
 from prettytable import PrettyTable
 
 from src import db_init, searcher
+from src.config import Config
 
 
 def print_usage() -> None:
@@ -31,7 +32,7 @@ def main():
 
     config_file = Path(os.path.dirname(os.path.realpath(__file__))) / "config.json"
     with open(config_file) as cf:
-        config = json.load(cf)
+        config = Config.from_dict(json.load(cf))
     database = db_init.from_config(config)
 
     print("Searching...")

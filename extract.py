@@ -6,6 +6,7 @@ import tempfile
 from pathlib import Path
 
 from src import db_init, extractor
+from src.config import Config
 from src.db_models import Metadata as MetadataModel
 
 
@@ -18,7 +19,7 @@ def main():
 
     config_file = Path(os.path.dirname(os.path.realpath(__file__))) / "config.json"
     with open(config_file) as cf:
-        config = json.load(cf)
+        config = Config.from_dict(json.load(cf))
     database = db_init.from_config(config)
 
     for id in args.book_ids:
