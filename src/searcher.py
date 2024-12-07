@@ -21,7 +21,7 @@ def search(
     format: Optional[str],
     lang: Optional[str],
     query: Optional[str],
-    max_results: Optional[int],
+    max_results: Optional[int] = None,
 ) -> ModelSelect:
     operators = PlaceholderOperator()
     if title is not None:
