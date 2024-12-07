@@ -14,13 +14,13 @@ class NoFiltersException(Exception): ...
 
 
 def search(
-    title: Optional[str],
-    author: Optional[str],
-    translator: Optional[str],
-    series: Optional[str],
-    format: Optional[str],
-    lang: Optional[str],
-    query: Optional[str],
+    title: Optional[str] = None,
+    author: Optional[str] = None,
+    translator: Optional[str] = None,
+    series: Optional[str] = None,
+    format: Optional[str] = None,
+    lang: Optional[str] = None,
+    query: Optional[str] = None,
     max_results: Optional[int] = None,
 ) -> ModelSelect:
     operators = PlaceholderOperator()
